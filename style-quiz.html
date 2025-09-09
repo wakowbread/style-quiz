@@ -101,7 +101,6 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: none;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -368,7 +367,7 @@
                     <h2 class="text-4xl font-bold text-gray-900 mb-6">您的風格是：${resultText}</h2>
                     <p class="text-lg text-gray-600 mb-8">${resultDescription}</p>
                     <div class="result-image-wrapper">
-                        <div id="image-loader" class="loading-spinner block"></div>
+                        <div id="image-loader" class="loading-spinner"></div>
                         <img id="result-image" src="" alt="${resultText}風格照片" class="result-image hidden">
                     </div>
                     <div class="mt-8">
@@ -387,6 +386,8 @@
                 };
                 const apiKey = "";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+                imageLoader.style.display = 'block'; // 顯示載入圖示
 
                 let response;
                 let retries = 0;
@@ -420,12 +421,12 @@
                 } else {
                     console.error("No image data received from API.");
                     imageLoader.style.display = 'none';
-                    quizContainer.innerHTML += `<p class="text-red-500 mt-4">圖片生成失敗，請稍後再試。</p>`;
+                    quizContainer.innerHTML += `<p class="text-red-500 mt-4">圖片生成失敗，請稍後再試。此為暫時性問題，與您的操作無關。</p>`;
                 }
             } catch (error) {
                 console.error("Error generating image:", error);
                 imageLoader.style.display = 'none';
-                quizContainer.innerHTML += `<p class="text-red-500 mt-4">圖片生成失敗，請檢查網路連線。</p>`;
+                quizContainer.innerHTML += `<p class="text-red-500 mt-4">圖片生成失敗，請檢查網路連線或稍後再試。</p>`;
             }
 
             document.getElementById('retake-btn').addEventListener('click', resetQuiz);
@@ -489,3 +490,4 @@
     </script>
 </body>
 </html>
+
